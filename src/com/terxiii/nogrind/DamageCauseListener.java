@@ -78,13 +78,18 @@ public class DamageCauseListener extends EntityListener {
 						List<org.bukkit.inventory.ItemStack> drp = event.getDrops();
 						org.bukkit.inventory.ItemStack is;
 						int itype;
-						for(int count=0;count<drp.size();count++)
+						int count = 0;
+						while(count<drp.size())
 						{
 							is = drp.get(count);
 							itype = is.getType().getId();
 							if(itype<2258||itype>2256)
 							{
 								drp.remove(is);
+							}
+							else
+							{
+								count++;
 							}
 						}
 						event.setDroppedExp(0);
@@ -121,13 +126,18 @@ public class DamageCauseListener extends EntityListener {
 					List<ItemStack> drp = event.getDrops();
 					ItemStack is;
 					int itype;
-					for(int count=0;count<drp.size();count++)
+					int count = 0;
+					while(count<drp.size())
 					{
 						is = drp.get(count);
 						itype = is.getType().getId();
 						if(itype<2258||itype>2256)
 						{
 							drp.remove(is);
+						}
+						else
+						{
+							count++;
 						}
 					}
 					event.setDroppedExp(0);
