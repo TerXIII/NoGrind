@@ -1,0 +1,6 @@
+name: NoGrind
+version: 0.1a
+author: TerXIII
+description: Stops item and experience grinding!
+
+main: com.terxiii.nogrind.NoGrind
