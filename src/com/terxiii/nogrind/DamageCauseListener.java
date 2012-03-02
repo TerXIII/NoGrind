@@ -6,15 +6,16 @@ import java.util.ArrayList;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityListener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 
-public class DamageCauseListener extends EntityListener {
+public class DamageCauseListener implements Listener {
 	
 	public boolean isEnabled = false;
 	
@@ -34,7 +35,7 @@ public class DamageCauseListener extends EntityListener {
 		}
 	}
 	
-	
+	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event)
 	{
 		if(isEnabled)
@@ -65,6 +66,7 @@ public class DamageCauseListener extends EntityListener {
 		}
 	}
 	
+	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event)
 	{
 		if(isEnabled)

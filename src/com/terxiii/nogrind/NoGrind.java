@@ -7,14 +7,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 
 public class NoGrind extends org.bukkit.plugin.java.JavaPlugin {
 
-	
-	public static Logger log;
-	public DamageCauseListener dcl;
+	//private final ruFixPlayerListener PlayerListener = new ruFixPlayerListener(this);
+	public static Logger log = Logger.getLogger("Minecraft");;
+	public DamageCauseListener dcl = new DamageCauseListener(this);
 	@Override
 	public void onDisable() {
 		// TODO Auto-generated method stub
@@ -25,13 +24,12 @@ public class NoGrind extends org.bukkit.plugin.java.JavaPlugin {
 	@Override
 	public void onEnable() {
 		// TODO Auto-generated method stub
-		log = Logger.getLogger("Minecraft");
 		PluginManager pm = this.getServer().getPluginManager();
-		dcl = new DamageCauseListener(this);
 		dcl.isEnabled = true;
 		DamageCauseListener.scheduler = this.getServer().getScheduler();
-		pm.registerEvent(Event.Type.ENTITY_DAMAGE, dcl, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_DEATH, dcl, Event.Priority.Normal, this);
+		//pm.registerEvent(Event.Type.ENTITY_DAMAGE, dcl, Event.Priority.Normal, this);
+		//pm.registerEvent(Event.Type.ENTITY_DEATH, dcl, Event.Priority.Normal, this);
+		pm.registerEvents(dcl, this);
 		configure();
 		log.info("[NoGrind] Grinding is now managed.");
 	}
