@@ -7,40 +7,41 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 
 public class NoGrind extends org.bukkit.plugin.java.JavaPlugin {
 
-	
-	public static Logger log;
-	public DamageCauseListener dcl;
+	public static Logger log = Logger.getLogger("Minecraft");;
+	public DamageCauseListener dcl = new DamageCauseListener(this);
 	@Override
 	public void onDisable() {
-		// TODO Auto-generated method stub
 		dcl.isEnabled = false;
 		log.info("[VSP] Grinding is no longer managed.");
 	}
 
 	@Override
 	public void onEnable() {
-		// TODO Auto-generated method stub
-		log = Logger.getLogger("Minecraft");
 		PluginManager pm = this.getServer().getPluginManager();
-		dcl = new DamageCauseListener(this);
 		dcl.isEnabled = true;
 		DamageCauseListener.scheduler = this.getServer().getScheduler();
-		pm.registerEvent(Event.Type.ENTITY_DAMAGE, dcl, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_DEATH, dcl, Event.Priority.Normal, this);
+		pm.registerEvents(dcl, this);
 		configure();
 		log.info("[NoGrind] Grinding is now managed.");
 	}
 	
 	public void configure()
 	{
+		// THIS SOULD BE REPLACED AS SOON AS POSSIBLE!!!
+		// With Bukkit config API I guess.
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new FileReader(new File(getDataFolder(),"config.cfg")));
+			File dir = getDataFolder();
+			if (!dir.exists()) dir.mkdir();
+			File config = new File(getDataFolder(),"config.cfg");
+			if (!config.exists()) {
+				config.createNewFile();
+			}
+			reader = new BufferedReader(new FileReader(config));
 		
 			String s;
 			try {
@@ -59,12 +60,14 @@ public class NoGrind extends org.bukkit.plugin.java.JavaPlugin {
 					}
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				log.info("[NoGrind] could not read it's config file. Have you just deleted it?");
 				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
