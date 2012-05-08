@@ -31,6 +31,8 @@ public class NoGrind extends org.bukkit.plugin.java.JavaPlugin {
 	
 	public void configure()
 	{
+		// THIS SOULD BE REPLACED AS SOON AS POSSIBLE!!!
+		// With Bukkit config API I guess.
 		BufferedReader reader;
 		try {
 			File dir = getDataFolder();

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -46,16 +47,16 @@ public class DamageCauseListener implements Listener {
 		
 		EntityDamageByEntityEvent entev = (EntityDamageByEntityEvent)event;
 		
-		NoGrind.log.info("NoGrind: CAUSE: " + entev.getCause());
-		
 		if (entev.getCause() == DamageCause.PROJECTILE) {
 			Projectile pj = (Projectile)entev.getDamager();
 			if (pj.getShooter() instanceof Player) {
 				DamageCauseListener.combatTag(entev.getEntity());
 			}
 		} else if (entev.getCause() == DamageCause.MAGIC) {
-			NoGrind.log.info("NoGrind: " + entev.getEventName() + " : " + entev.getDamager());
-			DamageCauseListener.combatTag(entev.getEntity());
+			ThrownPotion potion = (ThrownPotion)entev.getDamager();
+			if (potion.getShooter() instanceof Player) {
+				DamageCauseListener.combatTag(entev.getEntity());
+			}
 		} else if (entev.getDamager() instanceof Player) {
 			DamageCauseListener.combatTag(entev.getEntity());
 		}
